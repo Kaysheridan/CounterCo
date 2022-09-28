@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
-class AppCustomer(models.Model):
+class Appcustomer(models.Model):
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     names = models.CharField(max_length=150, null=True)
     email = models.CharField(max_length=150, null=True)
@@ -16,12 +16,12 @@ class AppCustomer(models.Model):
 
 class Meals(models.Model):
     meal_choices = (
-        ('meal 1', 'breakfast')
-        ('meal 2', 'lunch')
-        ('meal 3', 'dinner')
-        ('meal 4', 'snacks')
+        ('meal one', 'breakfast'),
+        ('meal two', 'lunch'),
+        ('meal three', 'dinner'),
+        ('meal four', 'snacks'),
     )
-    name = models.CharField(options=meal_choices, max_length=60)
+    name = models.CharField(max_length=60, choices=meal_choices)
 
     def __str__(self):
         return self.name
@@ -41,3 +41,9 @@ class Foodoptions(models.Model):
         return str(self.names)
 
 
+# App user --------------------------
+
+
+class UserFoodchoice(models.Model):
+    client = models.ManyToManyField(Appcustomer, blank=True)
+    foods = models.ManyToManyField(Foodoptions)
